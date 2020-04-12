@@ -1,7 +1,7 @@
 /*	Author: maouc001
  *  Partner(s) Name: 
  *	Lab Section:
-i *	Assignment: Lab #  Exercise #
+ *	Assignment: Lab #  Exercise #
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
@@ -12,32 +12,12 @@ i *	Assignment: Lab #  Exercise #
 #include "simAVRHeader.h"
 #endif
 
- // return 1 (true) if bit at element k is 1, otherwise return 0 
-    unsigned char GetBit(unsigned char x, unsigned char k) {
-	return ((x & (0x01 << k)) != 0);
-    }  
-
-
 int main(void) {
-    DDRA = 0x00; PORTA = 0xFF;  // configure port A's 8 pins as inputs 
-    DDRC = 0xFF; PORTC = 0x00;  // configure port C's 8 pins as inputs
-    
-    // declare variables     
-    unsigned char cntavail ;    // total available spaces
-    unsigned char i; 
+    /* Insert DDR and PORT initializations */
 
-    while(1) {
-	cntavail = 0 ;         	// start the count at 0
+    /* Insert your solution below */
+    while (1) {
 
-	for(i = 0; i < 4; ++i){
-        	cntavail = (! GetBit(PINA, i ) ) ? cntavail + 1 : cntavail;
-	}
-	
-	// if lots are full C7 = 1, otherwise c7 = 0
-	PORTC = (cntavail != 0) ? cntavail : (cntavail | (0x01 << 7));
     }
-    return 1; 
+    return 1;
 }
-
-
-
