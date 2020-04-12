@@ -12,24 +12,32 @@
 #include "simAVRHeader.h"
 #endif
 
+ // return 1 (true) if bit at element k is 1, otherwise return 0 
+    unsigned char GetBit(unsigned char x, unsigned char k) {
+	return ((x & (0x01 << k)) != 0);
+    }  
+
+
 int main(void) {
     DDRA = 0x00; PORTA = 0xFF; // configure port A's 8 pins as inputs
-    DDRB = 0xFF; PORTB = 0x00; // configure port B's 8 pins as outputs
+    DDRC = 0x00; PORTC = 0xFF; // configure port C's 8 pins as inputs
     
     // declare variables     
-    unsigned char garageDoor ;
-    unsigned char lightSensor ;
-    unsigned char LED ; 
-    
-    while (1) { 
- 	garageDoor  = PINA & 0x01 ;   // assign garageDoor to A0
-        lightSensor = PINA & 0x02 ;   // assign light to A1
-       
-        // if garage door is open and the sensor light is off then LED = 1 
-	LED = (garageDoor && ( !lightSensor )) ? 0x01 : 0x00 ;          
+    unsigned char cntavail ;  // total available spaces
+    unsigned char i; 
 
-	PORTB = LED ;                 // assign LED to output 
-                              
+    while(1) {
+	cntavail = 0 ; 		// start the count at 0
+
+	for(i = 0; i < 4; ++i){
+        	cntavail = (! GetBit(PINA, i ) ) ? cntavail + 1 : cntavail;
+	}
+	
+	PORTC = cntavail; 	
     }
-    return 1;
+    return 1; 
 }
+             
+ 
+
+
